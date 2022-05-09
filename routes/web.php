@@ -14,5 +14,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('forms.create');
+})->name('forms.create');
+
+Route::post('/forms', 'FormController@store')->name('forms.store');
+
+Route::delete('/forms/{form_uid}', 'FormController@destroy')->name('forms.destroy');
+
+Route::get('/forms/{form_uid}', 'FormController@index')->name('forms.index');
+
+Route::post('/fields/{form_uid}', 'FieldController@store')->name('fields.store');
+
+Route::delete('/fields/{id}', 'FieldController@destroy')->name('fields.destroy');
+
