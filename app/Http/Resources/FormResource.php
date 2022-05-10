@@ -17,7 +17,6 @@ class FormResource extends JsonResource
         return [
             'uid' => $this->uid,
             'title' => $this->title,
-            'type' => $this->type,
             'fields' => new FieldCollection($this->fields),
         ];
     }
