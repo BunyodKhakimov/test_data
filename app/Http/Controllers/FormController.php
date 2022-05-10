@@ -16,9 +16,9 @@ class FormController extends Controller
         return view('forms.index')->with('form', $form)->with('fields', $form->fields);
     }
 
-    public function show(Form $form)
+    public function show($form_uid)
     {
-        return new FormResource($form);
+        return new FormResource(Form::where('uid', $form_uid)->firstOrFail());
     }
 
     public function store(FormsRequest $request)
