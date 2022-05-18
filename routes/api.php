@@ -19,3 +19,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('forms/{uid}', 'FormController@show');
+Route::post('answers', 'AnswerController@store');
