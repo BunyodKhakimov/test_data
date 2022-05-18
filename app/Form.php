@@ -14,4 +14,9 @@ class Form extends Model
     {
         return $this->hasMany(Field::class, 'form_uid', 'uid');
     }
+
+    public function answers()
+    {
+        return $this->hasManyThrough(Answer::class, Field::class, 'form_uid', 'field_id', 'uid', 'id');
+    }
 }
