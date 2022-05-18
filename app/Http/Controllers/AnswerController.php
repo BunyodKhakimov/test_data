@@ -3,83 +3,32 @@
 namespace App\Http\Controllers;
 
 use App\Answer;
+use App\Form;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class AnswerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+
+        Log::info($data['request']);
+        unset($data['request']['_token']);
+        unset($data['request']['_method']);
+
+        foreach($data['request'] as $field_id => $data)
+        {
+            $answer = Answer::create(['field_id' => $field_id, 'data' => $data]);
+            Log::info($answer);
+        }
+
+        return response(200);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Answer  $answer
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Answer $answer)
+    public function show($form_uid)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Answer  $answer
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Answer $answer)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Answer  $answer
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Answer $answer)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Answer  $answer
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Answer $answer)
-    {
-        //
+        $form = Form::where('uid', $form_uid)->firstOrFail();
+        return view('answers.show')->with('form', $form)->with('fields', $form->fields)->with('answers', $form->answers);
     }
 }
