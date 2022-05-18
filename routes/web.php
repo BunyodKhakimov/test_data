@@ -27,3 +27,5 @@ Route::post('/fields/{form_uid}', 'FieldController@store')->name('fields.store')
 
 Route::delete('/fields/{id}', 'FieldController@destroy')->name('fields.destroy');
 
+Route::get('/answers/{form_uid}', 'AnswerController@show')->name('answers.show');
+
